@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>tcpgecko.html</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: white;
+      font-family: sans-serif;
+      text-align: center;
+      transition: background-color 0.5s, color 0.5s;
+    }
+
+    h2 {
+      margin-top: 20px;
+      color: black;
+      transition: color 0.5s;
+    }
+
+      #exploit-wrapper {
+      position: relative;
+      display: inline-block;
+      margin-top: 40px;
+    }
+
+    #exploit-image {
+      display: block;
+      max-width: 90vw;
+      height: auto;
+    }
+
+    #exploit-button {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 20px;
+      background-color: rgba(0, 0, 0, 0.4);
+      border: 4px solid cyan;
+      cursor: pointer;
+      z-index: 10;
+    }
+
+    #text {
+      max-width: 60vw;
+      max-height: 50vh;
+      font-size: 1em;
+      padding: 10px;
+      margin: 40px auto 20px;
+      overflow-wrap: break-word;
+      overflow: auto;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.2);
+      transition: background-color 0.5s, color 0.5s;
+    }
+
+    #download-btn,
+    #toggle-bg {
+      padding: 10px 20px;
+      font-size: 1.2em;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin: 10px;
+      transition: background-color 0.5s, color 0.5s;
+    }
+
+    #download-btn {
+      background-color: #00b4b4;
+      color: white;
+    }
+
+    #download-btn:hover {
+      background-color: #007777;
+    }
+
+    #toggle-bg {
+      background-color: gray;
+      color: white;
+    }
+
+    body.dark {
+      background-color: black;
+      color: white;
+    }
+
+    body.dark h2 {
+      color: white;
+    }
+
+    body.dark #text {
+      background-color: #222;
+      color: white;
+    }
+
+    body.dark #toggle-bg {
+      background-color: #ccc;
+      color: black;
+    }
+
+    body.dark #download-btn {
+      background-color: #00b4b4;
+      color: white;
+    }
+
+    body.dark #download-btn:hover {
+      background-color: #007777;
+    }
+  </style>
+</head>
+<body>
+
+<h2>tcpgecko.png</h2>
+
+<div id="exploit-wrapper">
+  <img id="exploit-image" src="tcpgecko.png" alt="tcpgecko">
+  <div id="exploit-button" title="tcpgecko.png"></div>
+</div>
+
+<div id="text">
+  hbl用のtcpgecko.pngです。<br>
+  tcpgecko.pngをダウンロードをするためには下のダウンロードをクリックもしくはタップしてください。<br>
+  ルールや規約はありませんので、ご自由にお使いください。<br>
+  バグの修正等は受け付けておりません。
+</div>
+
+<button id="download-btn">download</button>
+<button id="toggle-bg">背景切り替え</button>
+
+<script>
+  function isWiiU() {
+    return navigator.userAgent.includes("WiiU");
+  }
+
+  document.getElementById("exploit-button").addEventListener("click", () => {
+    if (isWiiU()) {
+      location.href = "Exploit.html"; 
+    } else {
+      alert("この操作はWii Uで行ってください。");
+    }
+  });
+
+  document.getElementById("download-btn").addEventListener("click", () => {
+    fetch('tcpgecko.png')
+      .then(resp => resp.blob())
+      .then(blob => {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "tcpgecko.png";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+      })
+      .catch(() => alert("画像のダウンロードに失敗しました。再実行してください。"));
+  });
+
+  document.getElementById("toggle-bg").addEventListener("click", () => {
+    document.body.classList.toggle("dark");
+  });
+</script>
+
+</body>
+</html>
